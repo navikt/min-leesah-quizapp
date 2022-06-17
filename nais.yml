@@ -11,11 +11,11 @@ spec:
   ingresses:
     - https://min-leesah-quizapp.dev.intern.nav.no
   liveness:
-    path: /alive
+    path: /isalive
     timeout: 1
   readiness:
     initialDelay: 20
-    path: /ready
+    path: /isready
     timeout: 1
   replicas:
     max: 1
