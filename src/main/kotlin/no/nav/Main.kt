@@ -59,10 +59,10 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
                 )
             }
 
-            get("/alive") {
+            get("/isalive") {
                 call.respondText("OK")
             }
-            get("/ready") {
+            get("/isready") {
                 if (isReady()) call.respondText("OK") else call.respond(HttpStatusCode.ServiceUnavailable)
             }
 
