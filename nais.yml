@@ -27,7 +27,7 @@ spec:
     requests:
       cpu: 50m
       memory: 128Mi
-   prometheus:
+  prometheus:
     enabled: true  # default: false. Pod will now be scraped for metrics by Prometheus.
     path: /metrics # Path where prometheus metrics are served.
   kafka:
