@@ -19,16 +19,16 @@ internal class Database(private val dataSource: DataSource) {
             }
     }
 
-    internal fun flag() {
+    internal fun flag(): Boolean {
         val query = """SELECT flag FROM flag_tabell"""
         return sessionOf(dataSource)
             .use { session ->
                 session.run(
                     queryOf(query)
                         .map { it.string("data").toBoolean() }
-                        .asSingle
+                        .asList
                 )
-            }
+            }.first()
     }
 
 }
