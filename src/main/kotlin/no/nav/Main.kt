@@ -49,6 +49,7 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
         install(MicrometerMetrics) {
             registry = appMicrometerRegistry
         }
+        val helloCounter = appMicrometerRegistry.counter("min-quizapp-hello")
 
         /**
          * Konfigurasjon av endepunkt
@@ -58,6 +59,7 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
 
             get("/hello") {
                 call.respondText("Hello")
+                helloCounter.increment()
             }
 
             get("/secure") { call.respondText("Secure endpoint") }
