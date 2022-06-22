@@ -17,4 +17,4 @@ spec:
       for: 10s
       description: "/hello for app: {{ $labels.app }} har blitt kalt over 100 ganger"
       action: "Feire 🎉"
-      severity: info
+      severity: good
