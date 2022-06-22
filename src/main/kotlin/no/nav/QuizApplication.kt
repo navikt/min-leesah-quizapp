@@ -17,7 +17,9 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
         if(question.category == "team-registration") handleRegisterTeam(question)
         if(question.category == "ping-pong") handlePingPong(question)
         if(question.category == "make-grafana-board") handleMakeGrafana(question)
+        if(question.category == "make-ingress") handleMakeIngress(question)
     }
+
 
     /**
      * Question handlers
@@ -33,6 +35,9 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
 
     private fun handleMakeGrafana(question: Question) {
         answer(question.category, question.id(), "https://grafana.nais.io/goto/G7YhSv3nz?orgId=1")
+    }
+    private fun handleMakeIngress(question: Question) {
+        answer(question.category, question.id(), "https://min-leesah-quizapp.dev.intern.nav.no")
     }
 
 
