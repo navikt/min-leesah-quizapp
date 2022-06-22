@@ -28,7 +28,8 @@ lateinit var logger: Logger
 fun main() {
     val config = Config.fromEnv()
     logger = LoggerFactory.getLogger(config.appName)
-    val database = Database(DataSourceBuilder(System.getenv()).getDataSource())
+    val database = Database()
+    database.migrate()
     val app = QuizApplication(config.appName, database)
     RapidServer(config, ::ktorServer, app).startBlocking()
 }

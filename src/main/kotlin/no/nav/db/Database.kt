@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import java.time.Duration
 import javax.sql.DataSource
 
-class Database(private val dataSource: DataSource) {
+class Database(private val dataSource: DataSource = DataSourceBuilder(System.getenv()).getDataSource()) {
     internal fun settFlag() {
         val query = """INSERT INTO flag_tabell(flag) VALUES (:flag) ON CONFLICT DO NOTHING;"""
         return sessionOf(dataSource).use { session ->
@@ -31,6 +31,10 @@ class Database(private val dataSource: DataSource) {
             }
     }
 
+    internal fun migrate() {
+        DataSourceBuilder(System.getenv()).migrate()
+    }
+
 }
 
 internal class DataSourceBuilder(env: Map<String, String>) {
@@ -49,11 +53,11 @@ internal class DataSourceBuilder(env: Map<String, String>) {
         initializationFailTimeout = Duration.ofMinutes(1).toMillis()
     }
 
-    internal fun getDataSource() = HikariDataSource(hikariConfig).also { it.migrate() }
+    internal fun getDataSource() = HikariDataSource(hikariConfig)
 
-    internal fun HikariDataSource.migrate() {
+    internal fun migrate() {
         logger.info("Migrerer database")
-        this.use { dataSource ->
+        getDataSource().use { dataSource ->
             Flyway.configure()
                 .dataSource(dataSource)
                 .lockRetryCount(-1)
