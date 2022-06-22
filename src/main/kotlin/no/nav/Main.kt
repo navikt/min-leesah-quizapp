@@ -13,6 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
+import io.prometheus.client.exporter.common.TextFormat
 import no.nav.rapid.Assessment
 import no.nav.rapid.Config
 import no.nav.rapid.Question
@@ -73,7 +74,9 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
             }
 
             get("/metrics") {
-                call.respond(appMicrometerRegistry.scrape())
+                call.respondTextWriter(ContentType.parse(TextFormat.CONTENT_TYPE_004)) {
+                    appMicrometerRegistry.scrape(this)
+                }
             }
 
             get("/isalive") {
