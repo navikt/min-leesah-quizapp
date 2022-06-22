@@ -41,7 +41,7 @@ val nooParticipant = object : QuizParticipant("noop") {
 }
 
 class QuizRapid(
-    config: Config,
+    private val config: Config,
     clientId: String = UUID.randomUUID().toString().slice(1..5),
     private val rapidTopic: String = "quiz-rapid",
     private val participant: QuizParticipant = nooParticipant,
@@ -129,7 +129,7 @@ class QuizRapid(
             }?.also { return participant.handle(it) }
             tryFromRaw<Assessment>(message) {
                 it.containsValue("type", MessageType.ASSESSMENT.name)
-            }?.also { return participant.handle(it) }
+            }?.also { if(it.teamName == config.appName) return participant.handle(it) }
         } catch (e: JacksonException) {
             logger.warn("failed to parse, skipping message = $message")
             logger.warn(e.toString())

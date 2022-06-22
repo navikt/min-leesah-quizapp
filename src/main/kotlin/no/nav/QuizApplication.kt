@@ -16,6 +16,7 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
         logger.log(question)
         if(question.category == "team-registration") handleRegisterTeam(question)
         if(question.category == "ping-pong") handlePingPong(question)
+        if(question.category == "make-grafana-board") handleMakeGrafana(question)
     }
 
     /**
@@ -29,6 +30,11 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
     private fun handlePingPong(question: Question) {
         answer(question.category, question.id(), "pong")
     }
+
+    private fun handleMakeGrafana(question: Question) {
+        answer(question.category, question.id(), "https://grafana.nais.io/goto/G7YhSv3nz?orgId=1")
+    }
+
 
     override fun handle(assessment: Assessment) {
         logger.log(assessment)
