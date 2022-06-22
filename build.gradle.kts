@@ -6,6 +6,7 @@ val kotlinVersion = "1.6.20"
 val kotliqueryVersion = "1.8.0"
 val hikariCPVersion = "5.0.1"
 val flywaycoreVersion = "8.5.12"
+val postgressqlVersion = "42.3.6"
 
 
 plugins {
@@ -92,4 +93,6 @@ dependencies {
     implementation("com.zaxxer:HikariCP:$hikariCPVersion")
     implementation("org.flywaydb:flyway-core:$flywaycoreVersion")
     implementation("com.github.seratch:kotliquery:$kotliqueryVersion")
+    implementation("org.postgresql:postgresql:$postgressqlVersion")
+
 }
