@@ -85,7 +85,7 @@ class QuizRapid(
                 consumer.poll(Duration.ofSeconds(5)).also { records ->
                     records.forEach { participantHandle(it.value()) }
                     run(records)
-                    participant.messages().forEach { publish(it.json()) }
+                    participant.messages().forEach { publish(it.json()).also { melding -> logger.info("publishing: $melding") } }
                 }
             }
         } catch (err: WakeupException) {
