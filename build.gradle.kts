@@ -3,6 +3,10 @@ val kafkaVersion = "3.1.0"
 val junitJupiterVersion = "5.8.2"
 val kotlinVersion = "1.6.20"
 
+val kotliqueryVersion = "1.8.0"
+val hikariCPVersion = "5.0.1"
+val flywaycoreVersion = "8.5.12"
+
 
 plugins {
     kotlin("jvm") version "1.6.20"
@@ -83,4 +87,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
     testImplementation("org.awaitility:awaitility:4.2.0")
+
+
+    implementation("com.zaxxer:HikariCP:$hikariCPVersion")
+    implementation("org.flywaydb:flyway-core:$flywaycoreVersion")
+    implementation("com.github.seratch:kotliquery:$kotliqueryVersion")
 }
