@@ -82,7 +82,7 @@ class QuizRapid(
         try {
             consumer.subscribe(listOf(rapidTopic))
             while (running.get()) {
-                consumer.poll(Duration.ofSeconds(1)).also { records ->
+                consumer.poll(Duration.ofSeconds(5)).also { records ->
                     records.forEach { participantHandle(it.value()) }
                     run(records)
                     participant.messages().forEach { publish(it.json()) }
