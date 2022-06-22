@@ -18,7 +18,9 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
         if(question.category == "ping-pong") handlePingPong(question)
         if(question.category == "make-grafana-board") handleMakeGrafana(question)
         if(question.category == "make-ingress") handleMakeIngress(question)
+        if(question.category == "make-alert") handleMakeAlert(question)
     }
+
 
 
     /**
@@ -38,6 +40,9 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
     }
     private fun handleMakeIngress(question: Question) {
         answer(question.category, question.id(), "https://min-leesah-quizapp.dev.intern.nav.no")
+    }
+    private fun handleMakeAlert(question: Question) {
+        answer(question.category, question.id(), "https://nav-it.slack.com/archives/C03JJ2KLZJ5/p1655931106101389")
     }
 
 
