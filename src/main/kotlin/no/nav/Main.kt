@@ -54,7 +54,7 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
 
             get("/") {
                 call.respondText(
-                    "<html><h1>$appName</h1><html>",
+                    "<html><h1>$appName v2</h1><html>",
                     ContentType.Text.Html
                 )
             }
