@@ -1,0 +1,20 @@
+---
+apiVersion: "nais.io/v1"
+kind: "Alert"
+metadata:
+  name: min-leesah-alert
+  namespace: leesah-quiz
+  labels:
+    team: leesah-quiz
+spec:
+  receivers:
+    slack:
+      channel: 'sommerstudent-avdelingsdag-utvikling'
+      prependText: '🤖'
+  alerts:
+    - alert: Hello kalt over hundre ganger
+      expr: 'min_quizapp_hello_total{app="min-leesah-quizapp"} == 100'
+      for: 10s
+      description: "/hello for app: {{ $labels.app }} har blitt kalt over 100 ganger"
+      action: "Feire 🎉"
+      severity: info

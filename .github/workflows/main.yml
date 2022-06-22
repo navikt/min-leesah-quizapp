@@ -53,3 +53,16 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: nais.yml
           IMAGE: ${{ needs.set_version.outputs.image }}
+
+  apply-alerts:
+    name: Apply alerts to cluster
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: deploy to dev
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: alert.yaml
