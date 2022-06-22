@@ -33,5 +33,5 @@ spec:
   kafka:
     pool: nav-dev
   env:
-    - name: DEVELOPMENT
-      value: "false"
+    - name: QUIZ_TOPIC
+      value: "leesah-rapid-v1"
