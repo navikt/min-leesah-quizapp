@@ -13,6 +13,7 @@ spec:
   ingresses:
     - https://min-leesah-quizapp.dev.intern.nav.no
   liveness:
+    initialDelay: 60
     path: isalive
   readiness:
     initialDelay: 60
