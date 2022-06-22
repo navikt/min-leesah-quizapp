@@ -5,11 +5,14 @@ import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.metrics.micrometer.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import no.nav.rapid.Assessment
 import no.nav.rapid.Config
 import no.nav.rapid.Question
@@ -42,7 +45,10 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
                 !call.request.path().startsWith("/is")
             }
         }
-
+        val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+        install(MicrometerMetrics) {
+            registry = appMicrometerRegistry
+        }
 
         /**
          * Konfigurasjon av endepunkt
@@ -62,6 +68,10 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
                     "<html><h1>$appName v2</h1><html>",
                     ContentType.Text.Html
                 )
+            }
+
+            get("/metrics") {
+                call.respond(appMicrometerRegistry.scrape())
             }
 
             get("/isalive") {

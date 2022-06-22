@@ -30,6 +30,9 @@ spec:
       memory: 512Mi
   kafka:
     pool: nav-dev
+  prometheus:
+    enabled: true
+    path: /metrics
   env:
     - name: QUIZ_TOPIC
       value: "leesah-quiz.leesah-rapid-v1"
