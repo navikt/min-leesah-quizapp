@@ -20,15 +20,15 @@ class Database(private val dataSource: DataSource) {
     }
 
     internal fun flag(): Boolean {
-        val query = """SELECT flag FROM flag_tabell"""
+        val query = """SELECT flag FROM flag_tabell ORDER BY id DESC LIMIT 1;"""
         return sessionOf(dataSource)
             .use { session ->
                 session.run(
                     queryOf(query)
                         .map { it.string("data").toBoolean() }
-                        .asList
-                )
-            }.first()
+                        .asSingle
+                ) == true
+            }
     }
 
 }
@@ -49,7 +49,7 @@ internal class DataSourceBuilder(env: Map<String, String>) {
         initializationFailTimeout = Duration.ofMinutes(1).toMillis()
     }
 
-    internal fun getDataSource() = HikariDataSource(hikariConfig)
+    internal fun getDataSource() = HikariDataSource(hikariConfig).also { migrate() }
 
     internal fun migrate() {
         logger.info("Migrerer database")
