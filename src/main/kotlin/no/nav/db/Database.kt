@@ -49,11 +49,11 @@ internal class DataSourceBuilder(env: Map<String, String>) {
         initializationFailTimeout = Duration.ofMinutes(1).toMillis()
     }
 
-    internal fun getDataSource() = HikariDataSource(hikariConfig).also { migrate() }
+    internal fun getDataSource() = HikariDataSource(hikariConfig).also { it.migrate() }
 
-    internal fun migrate() {
+    internal fun HikariDataSource.migrate() {
         logger.info("Migrerer database")
-        getDataSource().use { dataSource ->
+        this.use { dataSource ->
             Flyway.configure()
                 .dataSource(dataSource)
                 .lockRetryCount(-1)
