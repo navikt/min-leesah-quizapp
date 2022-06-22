@@ -16,7 +16,6 @@ spec:
   readiness:
     initialDelay: 20
     path: /isready
-    timeout: 1
   replicas:
     max: 1
     min: 1
