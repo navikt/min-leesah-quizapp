@@ -8,6 +8,8 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
+  strategy:
+    type: Recreate
   ingresses:
     - https://min-leesah-quizapp.dev.intern.nav.no
   liveness:
