@@ -7,6 +7,7 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import no.nav.rapid.Assessment
@@ -36,7 +37,11 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
     }
     module {
         install(ContentNegotiation) { jackson() }
-        install(CallLogging)
+        install(CallLogging) {
+            filter { call ->
+                !call.request.path().startsWith("/is")
+            }
+        }
 
 
         /**
