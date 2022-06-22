@@ -14,6 +14,8 @@ import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import io.prometheus.client.exporter.common.TextFormat
+import no.nav.db.DataSourceBuilder
+import no.nav.db.Database
 import no.nav.rapid.Assessment
 import no.nav.rapid.Config
 import no.nav.rapid.Question
@@ -26,7 +28,7 @@ lateinit var logger: Logger
 fun main() {
     val config = Config.fromEnv()
     logger = LoggerFactory.getLogger(config.appName)
-    //val database = Database(DataSourceBuilder(System.getenv()).getDataSource())
+    val database = Database(DataSourceBuilder(System.getenv()).getDataSource())
     val app = QuizApplication(config.appName)
     RapidServer(config, ::ktorServer, app).startBlocking()
 }

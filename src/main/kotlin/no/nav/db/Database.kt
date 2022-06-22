@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 import java.time.Duration
 import javax.sql.DataSource
 
-internal class Database(private val dataSource: DataSource) {
+class Database(private val dataSource: DataSource) {
     internal fun settFlag() {
         val query = """INSERT INTO flag_tabell(flag) VALUES (:flag) ON CONFLICT DO NOTHING;"""
         return sessionOf(dataSource).use { session ->

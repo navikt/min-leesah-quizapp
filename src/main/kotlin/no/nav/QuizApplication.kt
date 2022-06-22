@@ -1,5 +1,6 @@
 package no.nav
 
+import no.nav.db.Database
 import no.nav.quizrapid.*
 import no.nav.rapid.Assessment
 import no.nav.rapid.Question
@@ -10,7 +11,7 @@ import no.nav.rapid.Question
  *
  * Her skal teamet bygge ut funksjonalitet for å løse oppgavene i leesah-game.
  */
-class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
+class QuizApplication(private val teamName: String, private val database: Database): QuizParticipant(teamName) {
 
     override fun handle(question: Question) {
         logger.log(question)
@@ -19,6 +20,7 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
         if(question.category == "make-grafana-board") handleMakeGrafana(question)
         if(question.category == "make-ingress") handleMakeIngress(question)
         if(question.category == "make-alert") handleMakeAlert(question)
+        if(question.category == "deduplication") handleDeduplication(question)
     }
 
 
@@ -45,6 +47,9 @@ class QuizApplication(private val teamName: String): QuizParticipant(teamName) {
         answer(question.category, question.id(), "https://nav-it.slack.com/archives/C03JJ2KLZJ5/p1655931106101389")
     }
 
+    private fun handleDeduplication(question: Question) {
+        if(!database.flag()) answer(question.category, question.id(), "you wont dupe me!").also { database.settFlag() }
+    }
 
     override fun handle(assessment: Assessment) {
         logger.log(assessment)
