@@ -46,7 +46,10 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
         install(ContentNegotiation) { jackson() }
         install(CallLogging) {
             filter { call ->
-                !call.request.path().startsWith("/is") || !call.request.path().startsWith("/metrics")
+                !call.request.path().startsWith("/is")
+            }
+            filter { call ->
+                !call.request.path().startsWith("/metrics")
             }
         }
         val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
