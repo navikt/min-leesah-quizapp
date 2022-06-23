@@ -14,7 +14,6 @@ import io.ktor.server.routing.*
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import io.prometheus.client.exporter.common.TextFormat
-import no.nav.db.DataSourceBuilder
 import no.nav.db.Database
 import no.nav.rapid.Assessment
 import no.nav.rapid.Config
@@ -47,7 +46,7 @@ fun ktorServer(appName: String, isReady: () -> Boolean): ApplicationEngine = emb
         install(ContentNegotiation) { jackson() }
         install(CallLogging) {
             filter { call ->
-                !call.request.path().startsWith("/is")
+                !call.request.path().startsWith("/is") || !call.request.path().startsWith("/metrics")
             }
         }
         val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
