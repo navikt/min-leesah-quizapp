@@ -25,7 +25,7 @@ class Database(private val dataSource: DataSource = DataSourceBuilder(System.get
             .use { session ->
                 session.run(
                     queryOf(query)
-                        .map { it.string("data").toBoolean() }
+                        .map { it.string("flag").toBoolean() }
                         .asSingle
                 ) == true
             }
